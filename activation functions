@@ -1,0 +1,65 @@
+#activation functions 
+import numpy as np
+import matplotlib.pyplot as plt
+
+def hyperbolic_tangent(x):
+    import math as m
+    
+    if type(x) == np.ndarray:
+        result = np.zeros_like(x)
+        
+        for i in range(len(x)):
+            result[i] = (m.exp(2*x[i])- 1)/(m.exp(2*x[i])+1)
+            
+    elif type(x) == int or type(x) == float:
+        result  = (m.exp(2*x)- 1)/(m.exp(2*x)+1)
+        
+    else:
+        raise TypeError('Invalid input type')
+        
+    return result
+
+def sigmoid(x):
+    import math as m
+    
+    if type(x) == np.ndarray:
+        result = np.zeros_like(x)
+        
+        for i in range(len(x)):
+            result[i] = 1/(1+m.exp(-x[i]))
+            
+    elif type(x) == int or type(x) == float:
+        result  = 1/(1+m.exp(-x))
+    
+    return result
+
+def ReLU(x):
+    
+    if type(x) == np.ndarray:
+        result = np.zeros_like(x)
+        
+        for i in range(len(x)):
+            result[i] = max(0, x[i])
+            
+    elif type(x) == int or type(x) == float:
+        result  = max(0, x)
+    
+    return result
+
+n_cols = 3
+n_rows = 1
+
+lins = np.linspace(-2, 2, 1000)
+
+plt.figure(figsize=(14, 6))
+
+functions = [hyperbolic_tangent, sigmoid, ReLU]
+
+labels = ['tanh', 'sigmoid', 'ReLU']
+
+for i in range(len(functions)):
+    plt.subplot(n_rows, n_cols, i+1)
+    plt.plot(lins, functions[i](lins))
+    plt.title('{} function'.format(labels[i]))
+
+None
